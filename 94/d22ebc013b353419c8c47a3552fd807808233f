@@ -1,0 +1,32 @@
+src/views/foco/Sparkline.tsx
+  s_7a47f4588e9aa0::t_2fc90d48bf15dc 1-88
+src/views/FocoView.tsx
+  s_7a47f4588e9aa0::t_330afc92afb27c 377,380,383,386-388,421-433
+  s_7a47f4588e9aa0::t_538149cc3f6820 168-175,182,185
+  s_7a47f4588e9aa0::t_9f84fbd70bdb76 723-816
+  s_7a47f4588e9aa0::t_ebe7e5a024d0b4 251-257
+  s_7a47f4588e9aa0::t_3b30ba99f930be 77-98
+  s_7a47f4588e9aa0::t_7ae608547ebd48 922-926
+  s_7a47f4588e9aa0::t_79202ce30ad681 3,5,9,12,14,20-21
+  s_7a47f4588e9aa0::t_01911f6b4cfcf3 33,35,41-42,47-55
+src/lib/data.ts
+  s_7a47f4588e9aa0::t_7206fb83d66800 170-193
+src/views/foco/retroExport.ts
+  s_7a47f4588e9aa0::t_abde2364a64828 1-139
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "94d22ebc013b353419c8c47a3552fd807808233f",
+  "prompts": {},
+  "sessions": {
+    "s_7a47f4588e9aa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
