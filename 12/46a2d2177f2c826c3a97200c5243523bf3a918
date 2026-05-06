@@ -1,0 +1,27 @@
+src/views/SidePanel.tsx
+  s_7a47f4588e9aa0::t_e23edb12a02c25 60,64
+  s_7a47f4588e9aa0::t_25b2ec2867447f 14,20,28,38,46-47
+  s_7a47f4588e9aa0::t_d3e3fba32f4e80 170-180
+  s_7a47f4588e9aa0::t_929daf56cb718c 250
+  s_7a47f4588e9aa0::t_94473acdb27d69 2
+src/views/Workspace.tsx
+  s_7a47f4588e9aa0::t_77111973531891 20-21
+  s_7a47f4588e9aa0::t_5c8dcab3a2dd0b 103
+  s_7a47f4588e9aa0::t_94e4a7e8908579 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "1246a2d2177f2c826c3a97200c5243523bf3a918",
+  "prompts": {},
+  "sessions": {
+    "s_7a47f4588e9aa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
