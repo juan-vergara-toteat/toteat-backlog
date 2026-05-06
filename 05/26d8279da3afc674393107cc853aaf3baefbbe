@@ -1,0 +1,23 @@
+supabase/migrations/0007_outcome_model.sql
+  s_7a47f4588e9aa0::t_f90a2e0abce528 1-207
+src/lib/database.types.ts
+  s_7a47f4588e9aa0::t_26d378da7f6715 21-23,31-35
+src/lib/database.gen.ts
+  s_7a47f4588e9aa0::t_3bfd7212c5e686 149-319,476,503,530,563-567
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "0526d8279da3afc674393107cc853aaf3baefbbe",
+  "prompts": {},
+  "sessions": {
+    "s_7a47f4588e9aa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
