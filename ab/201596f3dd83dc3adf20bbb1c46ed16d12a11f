@@ -1,0 +1,28 @@
+src/lib/data.ts
+  7a47f4588e9aa025 10-14,61-73
+supabase/migrations/0006_soft_delete_tickets.sql
+  7a47f4588e9aa025 1-71
+src/lib/database.gen.ts
+  7a47f4588e9aa025 295,321,347
+src/views/SidePanel.tsx
+  7a47f4588e9aa025 40,119-124
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "ab201596f3dd83dc3adf20bbb1c46ed16d12a11f",
+  "prompts": {
+    "7a47f4588e9aa025": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>",
+      "total_additions": 99,
+      "total_deletions": 3,
+      "accepted_lines": 99,
+      "overriden_lines": 0
+    }
+  }
+}
