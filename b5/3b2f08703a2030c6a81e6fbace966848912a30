@@ -1,0 +1,20 @@
+src/lib/data.ts
+  s_7a47f4588e9aa0::t_cf801fdd405442 3
+  s_7a47f4588e9aa0::t_f113f5e32c349b 119-235
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "b53b2f08703a2030c6a81e6fbace966848912a30",
+  "prompts": {},
+  "sessions": {
+    "s_7a47f4588e9aa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
