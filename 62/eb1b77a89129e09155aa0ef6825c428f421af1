@@ -1,0 +1,19 @@
+docs/SCHEMA.md
+  s_7a47f4588e9aa0::t_2620b2afee656f 1-266
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "62eb1b77a89129e09155aa0ef6825c428f421af1",
+  "prompts": {},
+  "sessions": {
+    "s_7a47f4588e9aa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
