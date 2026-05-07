@@ -1,0 +1,27 @@
+src/views/SidePanel.tsx
+  s_7a47f4588e9aa0::t_49ab884491680d 218
+  s_7a47f4588e9aa0::t_accc6ecefa9ad2 2-3,8,18,31,39-40,53,56
+src/views/Workspace.tsx
+  s_7a47f4588e9aa0::t_b44a7ff3a10a12 1,3,12,42,45
+docs/plans/outcome-roadmap.md
+  s_7a47f4588e9aa0::t_4f9ba7572fa41f 72-106
+src/lib/data.ts
+  s_7a47f4588e9aa0::t_afbd45a8096929 30,33-35,37
+  s_7a47f4588e9aa0::t_8e9648c75225ab 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "678ddf3a71b4be7215ac6a417d180b0a5fe97510",
+  "prompts": {},
+  "sessions": {
+    "s_7a47f4588e9aa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
