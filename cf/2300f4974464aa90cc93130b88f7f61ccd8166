@@ -1,0 +1,30 @@
+src/views/foco/chrome.tsx
+  s_7a47f4588e9aa0::t_d57319becebdf2 1-114
+src/views/foco/OutcomeForm.tsx
+  s_7a47f4588e9aa0::t_a4c50c14976dd1 1-125
+src/views/foco/OpportunityForm.tsx
+  s_7a47f4588e9aa0::t_112f09f25e1dbd 1-107
+src/views/FocoView.tsx
+  s_7a47f4588e9aa0::t_11cd920ad1284a 1-10,14,16,19,21,25-39,41-49,63-66,74-75,87-88,124-186,197-198,209-214,216-221,223,226-230,244-247,252-253,262,264-268,271-283,285-293,297,299-305,307,310-311,336,339-344,347-358,360-366,371-378,381-382,384,389-395,397-414,416-429,431-490,494,497-500,506-508,511,516,520-521,524,552-556,558-559,565,568-573,576-577,579-580,582-591,593-595,598-609,615,618-630,632-660,663-676,681,684-688,690-691,693-704,708-709,711-718,723,726-730,732-735,737-739,741-745,748-755,757
+  s_7a47f4588e9aa0::t_a2582673f9528a 396
+src/views/foco/ObservationForm.tsx
+  s_7a47f4588e9aa0::t_bffca747e06d3b 1-100
+src/views/atoms.tsx
+  s_7a47f4588e9aa0::t_2e320aa13363e7 69-96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "cf2300f4974464aa90cc93130b88f7f61ccd8166",
+  "prompts": {},
+  "sessions": {
+    "s_7a47f4588e9aa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
