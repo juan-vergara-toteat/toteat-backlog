@@ -1,0 +1,23 @@
+src/views/FocoView.tsx
+  s_7a47f4588e9aa0::t_193018427afa9b 728-736
+src/views/SidePanel.tsx
+  s_7a47f4588e9aa0::t_7ffdef73233a20 85
+src/views/Workspace.tsx
+  s_7a47f4588e9aa0::t_6e55598abf8c9f 47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "653e8f0b98049f07ce99cf4dc29f1d65d4ff1eef",
+  "prompts": {},
+  "sessions": {
+    "s_7a47f4588e9aa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
