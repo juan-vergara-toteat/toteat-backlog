@@ -1,0 +1,50 @@
+src/views/foco/OpportunityForm.tsx
+  s_7a47f4588e9aa0::t_147a5576c2d785 7
+  s_7a47f4588e9aa0::t_fd423a1af4120b 9
+  s_7a47f4588e9aa0::t_17e597c40d4dd2 73-77
+  s_7a47f4588e9aa0::t_e3345e187631e2 24,31
+src/views/foco/TreeView.tsx
+  s_7a47f4588e9aa0::t_ab77215b04f150 451,453,455
+  s_7a47f4588e9aa0::t_b4961916847df9 665-666,671,673-685,690
+  s_7a47f4588e9aa0::t_13e8119095d92d 171-175,179,183,189
+  s_7a47f4588e9aa0::t_b2f78ca5f97c74 241
+  s_7a47f4588e9aa0::t_4a819c879ccca6 25,28
+  s_7a47f4588e9aa0::t_9c6fd8d96db99a 317-320,322,326-330
+  s_7a47f4588e9aa0::t_5b10d2902e0cf4 387-389
+src/lib/database.types.ts
+  s_7a47f4588e9aa0::t_15275cd5545e59 28
+src/views/foco/retroExport.ts
+  s_7a47f4588e9aa0::t_56def39563072b 114-121,123,126
+  s_7a47f4588e9aa0::t_f3da43b9eea2c5 9
+src/views/atoms.tsx
+  s_7a47f4588e9aa0::t_3db462ba89e57b 47-54
+  s_7a47f4588e9aa0::t_abe8ba9408670b 4
+  s_7a47f4588e9aa0::t_2516763b01840b 24-30
+src/views/FocoView.tsx
+  s_7a47f4588e9aa0::t_b5ddde1686ea17 353,355,357
+  s_7a47f4588e9aa0::t_a7880206b1c77f 472,496-508,537-540
+  s_7a47f4588e9aa0::t_d2c209e366a8d7 139-149,152-153,155,159,162,164-166
+  s_7a47f4588e9aa0::t_e158609d4de0ea 14,16,20
+  s_7a47f4588e9aa0::t_f8481089162c6c 374,376,408-416,418-420,422-461
+  s_7a47f4588e9aa0::t_e3721b48384f0c 262
+src/views/foco/OutcomeForm.tsx
+  s_7a47f4588e9aa0::t_73ed7b6680b86a 27,35
+  s_7a47f4588e9aa0::t_5072d8c4aea100 121-132
+  s_7a47f4588e9aa0::t_394a8688156646 7,9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "3083c98bb9ee7766e73f6cd4e21bec7dca11d879",
+  "prompts": {},
+  "sessions": {
+    "s_7a47f4588e9aa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
