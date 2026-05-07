@@ -1,0 +1,25 @@
+src/views/FocoView.tsx
+  s_7a47f4588e9aa0::t_5e2de7a46c22f3 489,491-510
+src/views/foco/OutcomeForm.tsx
+  s_7a47f4588e9aa0::t_fee33b554e9c99 121-130
+src/views/foco/retroExport.ts
+  s_7a47f4588e9aa0::t_e344c2587dbddb 114-115
+src/views/atoms.tsx
+  s_7a47f4588e9aa0::t_4c63e9b725a15b 50-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "784681c561c519efc89f94448a7479f795d4a8a6",
+  "prompts": {},
+  "sessions": {
+    "s_7a47f4588e9aa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
