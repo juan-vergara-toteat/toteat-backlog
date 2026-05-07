@@ -1,0 +1,21 @@
+supabase/migrations/0009_outcome_horizon.sql
+  s_7a47f4588e9aa0::t_08f8b0c74ec07d 1-37
+src/lib/database.gen.ts
+  s_7a47f4588e9aa0::t_75ebf5b9d89f9d 214,231,248
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.1",
+  "base_commit_sha": "524df450b8472bc3e6064e10a62394e9305a8bc2",
+  "prompts": {},
+  "sessions": {
+    "s_7a47f4588e9aa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
