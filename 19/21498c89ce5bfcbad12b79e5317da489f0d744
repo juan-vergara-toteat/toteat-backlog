@@ -1,0 +1,40 @@
+docs/plans/outcome-roadmap.md
+  s_7a47f4588e9aa0::t_c7958001f1efe3 29
+src/views/FocoView.tsx
+  s_7a47f4588e9aa0::t_cd56485586e0c0 62
+  s_7a47f4588e9aa0::t_82b975dade1d0b 425
+  s_7a47f4588e9aa0::t_41c142acbe2f83 4
+  s_7a47f4588e9aa0::t_471ac66d4ce014 194,209,231
+  s_7a47f4588e9aa0::t_0df1a0fa9d9ce2 128-129,144
+  s_7a47f4588e9aa0::t_1ee873acc2b4d1 347,351-353,382,388,402,408-411
+src/views/foco/OutcomeForm.tsx
+  s_7a47f4588e9aa0::t_7aaf996ea2e370 14,33,54,106,113
+src/views/foco/TreeView.tsx
+  s_7a47f4588e9aa0::t_890f642c7fc041 12
+  s_7a47f4588e9aa0::t_9fb4ef9d8ffae1 62
+  s_7a47f4588e9aa0::t_1b75707ab55413 114
+  s_7a47f4588e9aa0::t_198c93dca2ed33 148,173-174,182-183,185,245-248,250,254-255
+  s_7a47f4588e9aa0::t_e420b3e98a2c96 470
+src/views/foco/retroExport.ts
+  s_7a47f4588e9aa0::t_b514fa14d37a25 3
+  s_7a47f4588e9aa0::t_f8c4df3b58c904 67
+docs/SCHEMA.md
+  s_7a47f4588e9aa0::t_475a1dd2d9623c 24
+  s_7a47f4588e9aa0::t_94a94433ae73a9 5,10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "1921498c89ce5bfcbad12b79e5317da489f0d744",
+  "prompts": {},
+  "sessions": {
+    "s_7a47f4588e9aa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b1127a5-a95d-4d88-8bae-5ad5033348cd",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
