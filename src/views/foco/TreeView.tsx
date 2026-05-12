@@ -111,7 +111,7 @@ type LaidOutRoot = {
 // =====================================================================
 
 export function TreeView({
-  outcomes, opportunities, tickets, profiles, onOpenTicket, onSwitchToLista,
+  outcomes, opportunities, tickets, profiles, loading, onOpenTicket, onSwitchToLista,
 }: {
   outcomes: Outcome[];
   opportunities: Opportunity[];
@@ -119,6 +119,9 @@ export function TreeView({
   // observations is unused in v1 but accepted for API parity with FocoView.
   observations: MetricObservation[];
   profiles: Profile[];
+  // True while the outcomes query is still in-flight — used to suppress
+  // the "Empieza definiendo un outcome" empty state on first paint.
+  loading?: boolean;
   onOpenTicket: (id: string) => void;
   onSwitchToLista?: () => void;
 }) {
@@ -261,6 +264,24 @@ export function TreeView({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [visibleRoots, outcomes, opportunities, tickets],
   );
+
+  // ----- Loading state --------------------------------------------------
+  // While the outcomes query is in-flight we don't yet know whether the
+  // workspace is empty or full — render a neutral placeholder so the
+  // empty-state card doesn't flash on every refresh.
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+        <Header filter={filter} setFilter={setFilter} />
+        <div style={{
+          background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 14,
+          padding: 24, textAlign: 'center', color: 'var(--ink-3)', fontSize: 14,
+        }}>
+          Cargando…
+        </div>
+      </div>
+    );
+  }
 
   // ----- Empty state ----------------------------------------------------
   if (outcomes.length === 0) {

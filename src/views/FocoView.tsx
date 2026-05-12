@@ -46,13 +46,16 @@ const FILTERS: { mode: FilterMode; label: string }[] = [
 // =====================================================================
 
 export function FocoView({
-  outcomes, opportunities, tickets, observations, profiles, onOpenTicket,
+  outcomes, opportunities, tickets, observations, profiles, loading, onOpenTicket,
 }: {
   outcomes: Outcome[];
   opportunities: Opportunity[];
   tickets: Ticket[];
   observations: MetricObservation[];
   profiles: Profile[];
+  // True while the outcomes query is in-flight. Suppresses the empty-state
+  // card from flashing before the first data arrives.
+  loading?: boolean;
   onOpenTicket: (id: string) => void;
 }) {
   const { profile } = useAuth();
@@ -183,6 +186,29 @@ export function FocoView({
     }
     onOpenTicket(data.id);
   };
+
+  // ----- Loading state --------------------------------------------------
+  // Suppress the empty state until the outcomes query has resolved. The
+  // hook always starts with rows=[] before the first fetch lands, so
+  // without this we'd briefly render "Empieza definiendo un outcome" on
+  // every page refresh.
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+        <Header
+          filter={filter} setFilter={setFilter}
+          retroLabel={retroLabel} onCopyRetro={handleCopyRetro}
+          onNewOutcome={() => setEditingOutcome({ _new: true })}
+        />
+        <div style={{
+          background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 14,
+          padding: 24, textAlign: 'center', color: 'var(--ink-3)', fontSize: 14,
+        }}>
+          Cargando…
+        </div>
+      </div>
+    );
+  }
 
   // ----- Empty state ----------------------------------------------------
   if (outcomes.length === 0) {

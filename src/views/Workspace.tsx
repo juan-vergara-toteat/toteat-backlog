@@ -13,7 +13,9 @@ export function Workspace() {
   const { profile, signOut } = useAuth();
   const { rows } = useTickets();
   const { profiles } = useProfiles();
-  const { rows: outcomes } = useOutcomes();
+  // outcomesLoading distinguishes "no outcomes yet" from "haven't fetched
+  // yet" — without it, the empty-state card flashes on every refresh.
+  const { rows: outcomes, loading: outcomesLoading } = useOutcomes();
   const { rows: opportunities } = useOpportunities();
   const { rows: observations } = useAllMetricObservations();
   const presence = usePresence(profile);
@@ -57,6 +59,7 @@ export function Workspace() {
             tickets={rows}
             observations={observations}
             profiles={profiles}
+            loading={outcomesLoading}
             onOpenTicket={setOpenId}
           />
         ) : (
@@ -66,6 +69,7 @@ export function Workspace() {
             tickets={rows}
             observations={observations}
             profiles={profiles}
+            loading={outcomesLoading}
             onOpenTicket={setOpenId}
             onSwitchToLista={() => setView('lista')}
           />
