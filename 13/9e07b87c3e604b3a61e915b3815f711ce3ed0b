@@ -1,0 +1,26 @@
+src/views/foco/TreeView.tsx
+  s_0faf145956bf0e::t_ff83b08cb45ad8 268-285
+  s_0faf145956bf0e::t_d6649844bf2e86 114,122-124
+src/views/FocoView.tsx
+  s_0faf145956bf0e::t_f5c58988eae455 49,56-58
+  s_0faf145956bf0e::t_3a033dff38b508 190-212
+src/views/Workspace.tsx
+  s_0faf145956bf0e::t_ad3d1523093f2c 16-18
+  s_0faf145956bf0e::t_0c714a2b1397cf 62,72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "139e07b87c3e604b3a61e915b3815f711ce3ed0b",
+  "prompts": {},
+  "sessions": {
+    "s_0faf145956bf0e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "dfdc2060-9aee-47d4-a68d-66507431e7e1",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
