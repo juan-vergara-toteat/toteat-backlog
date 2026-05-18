@@ -12,12 +12,16 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type {
   Outcome, Opportunity, Ticket, Profile, MetricObservation,
   OutcomeDirection, OutcomeHorizon, TicketStatus,
+  TicketPriority, TicketImpact,
 } from '../lib/database.types';
 import { createTicket, updateOpportunity, updateOutcome, updateTicket } from '../lib/data';
 import { useAuth } from '../lib/auth';
 import {
-  Avatar, FilterPill,
+  Avatar, FilterPill, Pill,
+  STATUS,
+  STATUS_COLOR,
   TICKET_STATUS_OPTIONS, HORIZON_OPTIONS, CONFIDENCE_OPTIONS,
+  PRIORITY_COLOR, IMPACT_COLOR, EFFORT_TONE,
   type Confidence,
   DIRECTION_ARROW, fmtMetric,
 } from './atoms';
@@ -27,7 +31,10 @@ import { OutcomeForm } from './foco/OutcomeForm';
 import { OpportunityForm } from './foco/OpportunityForm';
 import { ObservationForm } from './foco/ObservationForm';
 import { StatusPicker } from './foco/StatusPicker';
+import { MultiSelectFilter, type MultiSelectOption } from './foco/MultiSelectFilter';
 import { btnPrimary, btnSecondary } from './foco/chrome';
+
+const PRIORITIES: TicketPriority[] = ['Alta', 'Media', 'Baja'];
 
 // =====================================================================
 // Filter modes
@@ -61,6 +68,14 @@ export function FocoView({
   const { profile } = useAuth();
 
   const [filter, setFilter] = useState<FilterMode>('all');
+  // Ticket-scoped filters. Each is an additive AND filter: the ticket
+  // must match every filter that has at least one value selected. Empty
+  // arrays mean "no constraint", not "match nothing", so the default
+  // view shows the full tree.
+  const [ownerIds, setOwnerIds] = useState<string[]>([]);
+  const [statuses, setStatuses] = useState<TicketStatus[]>([]);
+  const [priorities, setPriorities] = useState<TicketPriority[]>([]);
+  const ticketFilterActive = ownerIds.length > 0 || statuses.length > 0 || priorities.length > 0;
   const [editingOutcome, setEditingOutcome] = useState<
     Outcome | { _new: true } | null
   >(null);
@@ -105,25 +120,50 @@ export function FocoView({
     return m;
   }, [outcomes, opportunities]);
 
+  // Ticket-level filters compose via AND. Empty arrays = no constraint.
+  // Everything downstream (orphan list, ticketsByOpp, branch visibility)
+  // derives from this filtered set, so the tree collapses to just the
+  // matching work when any filter is on.
+  const filteredTickets = useMemo(() => {
+    if (!ticketFilterActive) return tickets;
+    return tickets.filter(t => {
+      if (ownerIds.length > 0) {
+        if (!t.owner_id || !ownerIds.includes(t.owner_id)) return false;
+      }
+      if (statuses.length > 0) {
+        if (!statuses.includes(t.status as TicketStatus)) return false;
+      }
+      if (priorities.length > 0) {
+        if (!t.prioridad || !priorities.includes(t.prioridad as TicketPriority)) return false;
+      }
+      return true;
+    });
+  }, [tickets, ownerIds, statuses, priorities, ticketFilterActive]);
+
   const ticketsByOpp = useMemo(() => {
     const m = new Map<string, Ticket[]>();
-    tickets.forEach(t => {
+    filteredTickets.forEach(t => {
       if (!t.opportunity_id) return;
       if (!m.has(t.opportunity_id)) m.set(t.opportunity_id, []);
       m.get(t.opportunity_id)!.push(t);
     });
     return m;
-  }, [tickets]);
+  }, [filteredTickets]);
 
+  // Solution counts for the retro export still reflect the full backlog —
+  // the retro is a workspace-wide snapshot, not a per-user filter.
   const solutionCounts = useMemo(() => {
     const m = new Map<string, number>();
-    ticketsByOpp.forEach((arr, oppId) => m.set(oppId, arr.length));
+    tickets.forEach(t => {
+      if (!t.opportunity_id) return;
+      m.set(t.opportunity_id, (m.get(t.opportunity_id) ?? 0) + 1);
+    });
     return m;
-  }, [ticketsByOpp]);
+  }, [tickets]);
 
   const orphanTickets = useMemo(
-    () => tickets.filter(t => !t.opportunity_id),
-    [tickets],
+    () => filteredTickets.filter(t => !t.opportunity_id),
+    [filteredTickets],
   );
 
   // ----- Filter logic ---------------------------------------------------
@@ -138,13 +178,24 @@ export function FocoView({
     return ((o.horizon as OutcomeHorizon | null) ?? 'later') === filter;
   }
 
-  // Opportunities and tickets are no longer status-gated by the filter —
-  // visibility is decided at the outcome level.
+  // Opportunities and tickets are no longer status-gated by the horizon
+  // filter — visibility is decided at the outcome level. When any
+  // ticket-scoped filter is on we additionally drop opps that don't
+  // carry any matching tickets, so the tree collapses to the branches
+  // that actually need attention.
   function visibleOpps(o: Outcome): Opportunity[] {
-    return oppsByOutcome.get(o.id) ?? [];
+    const opps = oppsByOutcome.get(o.id) ?? [];
+    if (!ticketFilterActive) return opps;
+    return opps.filter(op => (ticketsByOpp.get(op.id) ?? []).length > 0);
   }
 
-  const visibleRoots = outcomes.filter(rootMatchesHorizon);
+  // When ticket filters are on, also hide outcomes whose every opp has
+  // been pruned — otherwise the view fills with empty cards.
+  const visibleRoots = outcomes.filter(o => {
+    if (!rootMatchesHorizon(o)) return false;
+    if (!ticketFilterActive) return true;
+    return visibleOpps(o).length > 0;
+  });
 
   // Orphans aren't attached to any outcome, so they don't fit a horizon.
   // Show them only on the 'all' filter so the user has a place to triage.
@@ -197,6 +248,10 @@ export function FocoView({
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         <Header
           filter={filter} setFilter={setFilter}
+          profiles={profiles}
+          ownerIds={ownerIds} setOwnerIds={setOwnerIds}
+          statuses={statuses} setStatuses={setStatuses}
+          priorities={priorities} setPriorities={setPriorities}
           retroLabel={retroLabel} onCopyRetro={handleCopyRetro}
           onNewOutcome={() => setEditingOutcome({ _new: true })}
         />
@@ -216,6 +271,10 @@ export function FocoView({
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         <Header
           filter={filter} setFilter={setFilter}
+          profiles={profiles}
+          ownerIds={ownerIds} setOwnerIds={setOwnerIds}
+          statuses={statuses} setStatuses={setStatuses}
+          priorities={priorities} setPriorities={setPriorities}
           retroLabel={retroLabel} onCopyRetro={handleCopyRetro}
           onNewOutcome={() => setEditingOutcome({ _new: true })}
         />
@@ -253,6 +312,10 @@ export function FocoView({
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       <Header
         filter={filter} setFilter={setFilter}
+        profiles={profiles}
+        ownerIds={ownerIds} setOwnerIds={setOwnerIds}
+        statuses={statuses} setStatuses={setStatuses}
+        priorities={priorities} setPriorities={setPriorities}
         retroLabel={retroLabel} onCopyRetro={handleCopyRetro}
         onNewOutcome={() => setEditingOutcome({ _new: true })}
       />
@@ -319,19 +382,59 @@ export function FocoView({
 // Header — filter pills + retro export + "+ Outcome"
 // =====================================================================
 
-function Header({ filter, setFilter, retroLabel, onCopyRetro, onNewOutcome }: {
+function Header({
+  filter, setFilter,
+  profiles,
+  ownerIds, setOwnerIds,
+  statuses, setStatuses,
+  priorities, setPriorities,
+  retroLabel, onCopyRetro, onNewOutcome,
+}: {
   filter: FilterMode;
   setFilter: (f: FilterMode) => void;
+  profiles: Profile[];
+  ownerIds: string[]; setOwnerIds: (v: string[]) => void;
+  statuses: TicketStatus[]; setStatuses: (v: TicketStatus[]) => void;
+  priorities: TicketPriority[]; setPriorities: (v: TicketPriority[]) => void;
   retroLabel: 'idle' | 'copied';
   onCopyRetro: () => void;
   onNewOutcome: () => void;
 }) {
+  // Owner dropdown rows show the avatar + name so the filter looks like
+  // the rows the user is filtering. Memoize since profiles can be hefty.
+  const ownerOptions: MultiSelectOption<string>[] = useMemo(
+    () => profiles.map(p => ({
+      value: p.id,
+      label: p.name,
+      accessory: <Avatar name={p.name} initials={p.initials} color={p.color} size={20} />,
+    })),
+    [profiles],
+  );
+
+  const statusOptions: MultiSelectOption<TicketStatus>[] = useMemo(
+    () => STATUS.map(s => ({
+      value: s,
+      label: s,
+      accessory: <Pill tone={STATUS_COLOR[s]}>{s}</Pill>,
+    })),
+    [],
+  );
+
+  const priorityOptions: MultiSelectOption<TicketPriority>[] = useMemo(
+    () => PRIORITIES.map(p => ({
+      value: p,
+      label: p,
+      accessory: <Pill tone={PRIORITY_COLOR[p]}>{p}</Pill>,
+    })),
+    [],
+  );
+
   return (
     <div style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       gap: 12, flexWrap: 'wrap',
     }}>
-      <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
         {FILTERS.map(f => (
           <FilterPill
             key={f.mode}
@@ -340,6 +443,29 @@ function Header({ filter, setFilter, retroLabel, onCopyRetro, onNewOutcome }: {
             onClick={() => setFilter(f.mode)}
           />
         ))}
+        {/* Divider — horizon scope on the left, ticket-shaped filters on
+            the right. They compose, but each set is operationally
+            distinct: horizon picks the slice of the roadmap, the others
+            narrow the ticket rows inside that slice. */}
+        <span style={{ width: 1, height: 18, background: 'var(--line-2)', margin: '0 6px' }} />
+        <MultiSelectFilter
+          label="Owner"
+          options={ownerOptions}
+          selected={ownerIds}
+          onChange={setOwnerIds}
+        />
+        <MultiSelectFilter
+          label="Status"
+          options={statusOptions}
+          selected={statuses}
+          onChange={setStatuses}
+        />
+        <MultiSelectFilter
+          label="Prioridad"
+          options={priorityOptions}
+          selected={priorities}
+          onChange={setPriorities}
+        />
       </div>
       <div style={{ display: 'flex', gap: 8 }}>
         <button onClick={onCopyRetro} style={btnSecondary}>
@@ -615,6 +741,14 @@ function SolutionRow({ ticket, profileById, onClick }: {
 }) {
   const owner = ticket.owner_id ? profileById.get(ticket.owner_id) : null;
   const [hover, setHover] = useState(false);
+  const priority = ticket.prioridad as TicketPriority | null;
+  const impact = ticket.impacto as TicketImpact | null;
+  const effort = ticket.esfuerzo as string | null;
+  const progress = ticket.progress ?? 0;
+  // Hide the meta strip entirely when there's nothing to show — keeps
+  // the row compact for sparsely-filled tickets instead of leaving a
+  // blank second line.
+  const hasMeta = !!priority || !!impact || !!effort || progress > 0;
   return (
     // Each ticket reads as its own white chip floating on the opportunity's
     // surface-2 tint. A subtle base shadow lifts it off the tint; hover swaps
@@ -625,23 +759,34 @@ function SolutionRow({ ticket, profileById, onClick }: {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        padding: '4px 8px',
-        borderRadius: 6,
-        marginBlock: 2,
+        padding: '12px 14px',
+        borderRadius: 8,
+        marginBlock: 3,
         cursor: 'pointer',
-        display: 'flex', alignItems: 'center', gap: 8,
+        display: 'flex', alignItems: 'center', gap: 10,
         background: 'var(--surface)',
         boxShadow: hover ? 'var(--shadow-1)' : '0 1px 2px rgba(27,27,27,0.04)',
         transition: 'box-shadow 80ms ease-out',
       }}
     >
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: '-0.01em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: '-0.01em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {ticket.item}
         </div>
         {ticket.description && (
-          <div style={{ fontSize: 13, color: 'var(--ink-3)', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <div style={{ fontSize: 13, color: 'var(--ink-3)', marginTop: 3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {ticket.description}
+          </div>
+        )}
+        {hasMeta && (
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 10, marginTop: 8,
+            flexWrap: 'wrap',
+          }}>
+            {priority && <MetaChip label="Prioridad" value={priority} tone={PRIORITY_COLOR[priority]} />}
+            {impact && <MetaChip label="Impacto" value={impact} tone={IMPACT_COLOR[impact]} />}
+            {effort && <MetaChip label="Esfuerzo" value={effort} tone={EFFORT_TONE} />}
+            <ProgressMeter value={progress} />
           </div>
         )}
       </div>
@@ -656,6 +801,58 @@ function SolutionRow({ ticket, profileById, onClick }: {
       />
       {owner && <Avatar name={owner.name} initials={owner.initials} color={owner.color} size={22} />}
     </div>
+  );
+}
+
+// Compact label+value chip used in the ticket meta strip. The label sits
+// outside the tone (in muted ink) so the tone only emphasizes the value —
+// reading "Prioridad: Baja" stays calm when the value is muted.
+function MetaChip({ label, value, tone }: {
+  label: string;
+  value: string;
+  tone: { bg: string; fg: string };
+}) {
+  return (
+    <span style={{
+      display: 'inline-flex', alignItems: 'center', gap: 6,
+      fontSize: 12, fontWeight: 600, color: 'var(--ink-3)',
+      letterSpacing: '-0.01em',
+    }}>
+      {label}
+      <span style={{
+        background: tone.bg, color: tone.fg,
+        borderRadius: 999, padding: '2px 9px',
+        fontSize: 12, fontWeight: 800,
+      }}>{value}</span>
+    </span>
+  );
+}
+
+// Tiny progress meter — bar + percentage. Always renders when shown
+// so 0% looks like an empty bar rather than nothing.
+function ProgressMeter({ value }: { value: number }) {
+  const pct = Math.max(0, Math.min(100, value));
+  return (
+    <span style={{
+      display: 'inline-flex', alignItems: 'center', gap: 8,
+      fontSize: 12, fontWeight: 600, color: 'var(--ink-3)',
+      letterSpacing: '-0.01em',
+    }}>
+      Progreso
+      <span style={{
+        position: 'relative',
+        width: 64, height: 6, borderRadius: 999,
+        background: 'var(--line-2)', overflow: 'hidden',
+      }}>
+        <span style={{
+          position: 'absolute', inset: 0,
+          width: `${pct}%`,
+          background: pct >= 100 ? 'var(--good, #0E6E4F)' : 'var(--coral)',
+          borderRadius: 999,
+        }} />
+      </span>
+      <span style={{ color: 'var(--ink-2)', fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{pct}%</span>
+    </span>
   );
 }
 

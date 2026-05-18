@@ -1,6 +1,6 @@
 import { useState, type CSSProperties } from 'react';
 import type {
-  TicketStatus, TicketPriority,
+  TicketStatus, TicketPriority, TicketImpact,
   OutcomeHorizon, OutcomeDirection, OutcomeCadence,
 } from '../lib/database.types';
 
@@ -20,6 +20,19 @@ export const PRIORITY_COLOR: Record<TicketPriority, { bg: string; fg: string }> 
   'Media': { bg: '#FFF1D1', fg: '#8A6300' },
   'Baja':  { bg: '#F2F2F2', fg: '#464646' },
 };
+
+// Impact tones — Alto impact reads as positive (green), Medio as amber,
+// Bajo as muted. Inverse semantics from priority on purpose: a high-impact
+// solution is good news; high-priority means urgent.
+export const IMPACT_COLOR: Record<TicketImpact, { bg: string; fg: string }> = {
+  'Alto':  { bg: '#DDF5EA', fg: '#0E6E4F' },
+  'Medio': { bg: '#FFF1D1', fg: '#8A6300' },
+  'Bajo':  { bg: '#F2F2F2', fg: '#6B6B6B' },
+};
+
+// Effort is just t-shirt sizing — no semantic good/bad. Use one neutral
+// chip so it reads as a label, not a judgment.
+export const EFFORT_TONE: { bg: string; fg: string } = { bg: '#F2F2F2', fg: '#464646' };
 
 // Horizon palette — strong attention for "now", warmer "next", muted parking
 // lot for "later". `now` re-uses the coral tone we already use for high-
