@@ -1,0 +1,38 @@
+src/views/FocoView.tsx
+  s_3c5f8bc228f29e::t_78aaa183765299 20-22,34,37
+  s_3c5f8bc228f29e::t_52b65fd56a854f 385-386,391-392,450,468
+  s_3c5f8bc228f29e::t_0b5bbe8eadda3d 181-185,188,192,196
+  s_3c5f8bc228f29e::t_cf57c4d9743478 387-390,395-398,403-431,437,446-449,451-467
+  s_3c5f8bc228f29e::t_da828f03706cbe 123-141
+  s_3c5f8bc228f29e::t_92f37bde599ad5 251-254,274-277
+  s_3c5f8bc228f29e::t_0711f34db98bcd 744-751,781-782,784-791,807-816,819-823,826-836,839-843,845-855
+  s_3c5f8bc228f29e::t_e041c300e14280 762-764,766,773,777,783
+  s_3c5f8bc228f29e::t_7aaf1b60be54c4 187,189,193-195,197-198
+  s_3c5f8bc228f29e::t_aa12c64386f9d0 817-818,824-825,837-838,844
+  s_3c5f8bc228f29e::t_292389558cbe28 15
+  s_3c5f8bc228f29e::t_229b12457ae61e 142,145,151,153-154,157-160,162,165-166
+  s_3c5f8bc228f29e::t_e17c04d6127202 315-318
+  s_3c5f8bc228f29e::t_1720c644843427 71-78
+  s_3c5f8bc228f29e::t_273cfd286b1e99 24
+src/views/atoms.tsx
+  s_3c5f8bc228f29e::t_3d8471e2c7fb21 24-36
+  s_3c5f8bc228f29e::t_3643c4ede29ea3 3
+src/views/foco/MultiSelectFilter.tsx
+  s_3c5f8bc228f29e::t_9709706d34573c 1-186
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.9",
+  "base_commit_sha": "b286d49303a441bf91aa7eb5540b8abb93d21a7f",
+  "prompts": {},
+  "sessions": {
+    "s_3c5f8bc228f29e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "aa2b47be-659f-4ac4-a837-4410f4ad2c1b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "JJVergara <vergara@uc.cl>"
+    }
+  }
+}
